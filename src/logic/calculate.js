@@ -1,6 +1,7 @@
+import Operate from './operate';
+
 const Calculate = (dataObject, buttonName) => {
-  let { total, next, object } = dataObject;
-  const operations = ['+', '-', '%', '÷', 'X'];
+  const operationSymbols = ['+', '-', '%', '÷', 'X'];
 
   if (buttonName === 'AC') {
     return {
@@ -9,7 +10,56 @@ const Calculate = (dataObject, buttonName) => {
       operation: null,
     };
   }
-  return { total, next, object };
+
+  if (dataObject.next && buttonName === '+/-') {
+    return {
+      next: (parseFloat(dataObject.next) * -1).toString(),
+    };
+  }
+
+  if (dataObject.total && buttonName === '+/-') {
+    return {
+      total: (parseFloat(dataObject.total) * -1).toString(),
+    };
+  }
+
+  if (buttonName === '%') {
+    if (dataObject.next) {
+      return {
+        next: dataObject.next.div(100).toString(),
+      };
+    }
+    if (dataObject.next && dataObject.operation) {
+      const answer = Operate(dataObject.total, dataObject.next, dataObject.operation);
+      return {
+        total: answer.div(100).toString(),
+        next: null,
+        operation: null,
+      };
+    }
+  }
+
+  if (buttonName === '=' && dataObject.total && dataObject.next && dataObject.operation) {
+    return {
+      total: Operate(dataObject.total, dataObject.next, dataObject.operation),
+      next: null,
+      operation: null,
+    };
+  }
+
+  if (operationSymbols && dataObject.total && dataObject.next && dataObject.operation) {
+    return {
+      total: null,
+      next: Operate(dataObject.total, dataObject.next, dataObject.operation),
+      operation: null,
+    };
+  }
+
+  return {
+    total: dataObject.total,
+    next: dataObject.next,
+    operation: dataObject.operation,
+  };
 };
 
 export default Calculate;
