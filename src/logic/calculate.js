@@ -26,13 +26,13 @@ const Calculate = (dataObject, buttonName) => {
   if (buttonName === '%') {
     if (dataObject.next) {
       return {
-        next: dataObject.next.div(100).toString(),
+        next: dataObject.next.div('100').toString(),
       };
     }
     if (dataObject.next && dataObject.operation) {
       const answer = Operate(dataObject.total, dataObject.next, dataObject.operation);
       return {
-        total: answer.div(100).toString(),
+        total: answer.div('100').toString(),
         next: null,
         operation: null,
       };
@@ -60,12 +60,18 @@ const Calculate = (dataObject, buttonName) => {
       if (dataObject.next.includes('.')) {
         return {};
       }
-      return { 
-        next: `${dataObject.next}.`
+      return {
+        next: `${dataObject.next}.`,
       };
     }
-    return { 
-      next: '0.'
+    return {
+      next: '0.',
+    };
+  }
+
+  if (buttonName === '=' && dataObject.next === '0' && dataObject.operation === '÷') {
+    return {
+      error: 'Error: You cannot divide by 0',
     };
   }
 
