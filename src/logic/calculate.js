@@ -55,6 +55,20 @@ const Calculate = (dataObject, buttonName) => {
     };
   }
 
+  if (buttonName === '.') {
+    if (dataObject.next) {
+      if (dataObject.next.includes('.')) {
+        return {};
+      }
+      return { 
+        next: `${dataObject.next}.`
+      };
+    }
+    return { 
+      next: '0.'
+    };
+  }
+
   return {
     total: dataObject.total,
     next: dataObject.next,
