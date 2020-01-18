@@ -6,12 +6,13 @@
 }
 
 .display {
+  display: flex;
+  justify-content: right;
   background-color: gray;
   height: 100px;
   color: white;
   font-weight: bold;
   padding-right: 20px;
-  text-align: right;
   font-size: 80px;
   opacity: 0.9;
 }
@@ -22,10 +23,14 @@
   opacity: 0.9;
 }
 
-button {
+.row {
   height: 100px;
+}
+
+button {
   border: 1px solid gray;
   color: black;
   font-weight: bold;
   font-size: 25px;
+  height: 100%;
 }
