@@ -118,9 +118,8 @@ const Calculate = (dataObject, buttonName) => {
       next: next + buttonName,
     };
   }
-  return {
-    total, next, operation,
-  };
+
+  throw Error('Error...');
 };
 
 export default Calculate;

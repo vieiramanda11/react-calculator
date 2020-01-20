@@ -16,7 +16,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <Display result={state.total || state.next || 0} />
+      <Display result={state.next || state.total || 0} />
       <ButtonPanel clickHandler={handleClick} />
     </div>
   );
