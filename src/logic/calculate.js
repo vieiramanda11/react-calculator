@@ -2,6 +2,7 @@ import Operate from './operate';
 
 const Calculate = (dataObject, buttonName) => {
   const operationSymbols = ['+', '-', '%', '÷', 'X'];
+  const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
 
   if (buttonName === 'AC') {
     return {
@@ -9,6 +10,23 @@ const Calculate = (dataObject, buttonName) => {
       next: null,
       operation: null,
     };
+  }
+
+  if (numbers) {
+    if (dataObject.operation) {
+      if (dataObject.next) {
+        return {
+          total: dataObject.total,
+          next: dataObject.next + buttonName,
+          operation: dataObject.operation,
+        };
+      }
+      return {
+        next: buttonName,
+        total: dataObject.total,
+        operation: dataObject.operation,
+      };
+    }
   }
 
   if (dataObject.next && buttonName === '+/-') {
