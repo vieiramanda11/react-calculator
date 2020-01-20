@@ -22,7 +22,7 @@ class App extends Component {
     return (
       <div className="app">
         <Display result={total || next} />
-        <ButtonPanel />
+        <ButtonPanel clickHandler={this.handleClick} />
       </div>
     );
   }
