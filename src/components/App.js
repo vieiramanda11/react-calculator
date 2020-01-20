@@ -18,9 +18,10 @@ class App extends Component {
   }
 
   render() {
+    const { total, next } = this.state;
     return (
       <div className="app">
-        <Display />
+        <Display result={total || next} />
         <ButtonPanel />
       </div>
     );
