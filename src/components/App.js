@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Display from './Display';
 import ButtonPanel from './ButtonPanel';
+import Calculate from '../logic/calculate';
 
 class App extends Component {
   constructor(props) {
@@ -10,6 +11,10 @@ class App extends Component {
       next: null,
       operation: null,
     };
+  }
+
+  handleClick(buttonName) {
+    this.setState((prevState) => (Calculate(prevState)), buttonName);
   }
 
   render() {
