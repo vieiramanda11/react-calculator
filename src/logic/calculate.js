@@ -1,102 +1,125 @@
 import Operate from './operate';
 
 const Calculate = (dataObject, buttonName) => {
-  const operationSymbols = ['+', '-', '%', '÷', 'X'];
-  const numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  const { total, next, operation } = dataObject;
+  const operationSymbols = {
+    AC: 'AC',
+    '+': '+',
+    '-': '-',
+    X: 'X',
+    '%': '%',
+    '+/-': '+/-',
+    '.': '.',
+    '÷': '÷',
+    '=': '=',
+  };
+  const operator = operationSymbols[buttonName];
 
-  if (buttonName === 'AC') {
-    return {
-      total: null,
-      next: null,
-      operation: null,
-    };
-  }
-
-  if (numbers) {
-    if (dataObject.operation) {
-      if (dataObject.next) {
-        return {
-          total: dataObject.total,
-          next: dataObject.next + buttonName,
-          operation: dataObject.operation,
-        };
-      }
+  if (operator) {
+    if (operator === 'AC') {
       return {
-        next: buttonName,
-        total: dataObject.total,
-        operation: dataObject.operation,
-      };
-    }
-  }
-
-  if (dataObject.next && buttonName === '+/-') {
-    return {
-      next: (parseFloat(dataObject.next) * -1).toString(),
-    };
-  }
-
-  if (dataObject.total && buttonName === '+/-') {
-    return {
-      total: (parseFloat(dataObject.total) * -1).toString(),
-    };
-  }
-
-  if (buttonName === '%') {
-    if (dataObject.next) {
-      return {
-        next: dataObject.next.div('100').toString(),
-      };
-    }
-    if (dataObject.next && dataObject.operation) {
-      const answer = Operate(dataObject.total, dataObject.next, dataObject.operation);
-      return {
-        total: answer.div('100').toString(),
+        total: null,
         next: null,
         operation: null,
       };
     }
-  }
-
-  if (buttonName === '=' && dataObject.total && dataObject.next && dataObject.operation) {
-    return {
-      total: Operate(dataObject.total, dataObject.next, dataObject.operation),
-      next: null,
-      operation: null,
-    };
-  }
-
-  if (operationSymbols && dataObject.total && dataObject.next && dataObject.operation) {
-    return {
-      total: null,
-      next: Operate(dataObject.total, dataObject.next, dataObject.operation),
-      operation: null,
-    };
-  }
-
-  if (buttonName === '.') {
-    if (dataObject.next) {
-      if (dataObject.next.includes('.')) {
+    if (operator === '=') {
+      if (!next || !operation) {
+        return {};
+      }
+      if (next === '0' || total === '0') {
         return {};
       }
       return {
-        next: `${dataObject.next}.`,
+        total: Operate(total, next, operation),
+        next: null,
+        operation: null,
+      };
+    }
+    if (operator === '+/-') {
+      if (next) {
+        return {
+          ...dataObject,
+          next: Operate(-1, next, 'X'),
+        };
+      }
+      if (total) {
+        return {
+          ...dataObject,
+          total: Operate(-1, total, 'X'),
+        };
+      }
+      return {};
+    }
+    if (operator === '.') {
+      if (next && next.includes(operator)) {
+        return {};
+      }
+      if (next) {
+        return {
+          ...dataObject,
+          next: next + operator,
+        };
+      }
+      if (total && total.includes(operator)) {
+        return {};
+      }
+      if (total) {
+        return {
+          ...dataObject,
+          total: total + operator,
+        };
+      }
+      if (operation) {
+        return {
+          ...dataObject,
+          next: next + operator,
+        };
+      }
+      return {
+        ...dataObject,
+        total: `0${operator}`,
+      };
+    }
+    if (operation) {
+      if (!next) {
+        return {
+          ...dataObject,
+          operation: operator,
+        };
+      }
+      return {
+        total: Operate(total, next, operation),
+        next: null,
+        operation: operator,
+      };
+    }
+    if (!next) {
+      return {
+        ...dataObject,
+        operation: operator,
       };
     }
     return {
-      next: '0.',
+      total: next,
+      next: null,
+      operation: buttonName,
     };
   }
-
-  if (buttonName === '=' && dataObject.next === '0' && dataObject.operation === '÷') {
+  if (!next) {
     return {
-      error: 'Error: You cannot divide by 0',
+      ...dataObject,
+      next: buttonName,
     };
   }
-
+  if (next) {
+    return {
+      ...dataObject,
+      next: next + buttonName,
+    };
+  }
   return {
-    total: dataObject.total,
-    next: dataObject.next,
-    operation: dataObject.operation,
+    total, next, operation,
   };
 };
 
