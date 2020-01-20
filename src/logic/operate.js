@@ -3,23 +3,28 @@ import Big from 'big.js';
 const Operate = (numberOne, numberTwo, operation) => {
   const firstNumber = Big(numberOne);
   const secondNumber = Big(numberTwo);
+  let result;
 
   switch (operation) {
     case '+':
-      return firstNumber.plus(secondNumber).toString();
+      result = firstNumber.plus(secondNumber);
+      break;
     case '-':
-      return firstNumber.minus(secondNumber).toString();
+      result = firstNumber.minus(secondNumber);
+      break;
     case 'X':
-      return firstNumber.times(secondNumber).toString();
+      result = firstNumber.times(secondNumber);
+      break;
     case '÷':
       if (secondNumber === '0') {
-        return '0';
+        result = '0';
       }
-      return firstNumber.div(secondNumber).toString();
+      result = firstNumber.div(secondNumber);
+      break;
     default:
       break;
   }
-  return '0';
+  return result.toString();
 };
 
 export default Operate;
