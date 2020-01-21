@@ -1,0 +1,36 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 700px;
+  margin: 50px auto;
+}
+
+.display {
+  display: flex;
+  justify-content: right;
+  background-color: gray;
+  height: 100px;
+  color: white;
+  font-weight: bold;
+  padding-right: 20px;
+  font-size: 80px;
+  opacity: 0.9;
+}
+
+.button-panel {
+  display: flex;
+  flex-direction: column;
+  opacity: 0.9;
+}
+
+.row {
+  height: 100px;
+}
+
+button {
+  border: 1px solid gray;
+  color: black;
+  font-weight: bold;
+  font-size: 25px;
+  height: 100%;
+}
