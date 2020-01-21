@@ -36,6 +36,22 @@ const Calculate = (dataObject, buttonName) => {
         operation: null,
       };
     }
+    if (operator === '%') {
+      if (operation && next) {
+        const result = Operate(total, next, operation);
+        return {
+          total: (result / 100).toString(),
+          next: null,
+          operation: null,
+        };
+      }
+      if (next) {
+        return {
+          ...dataObject,
+          next: (next / 100).toString(),
+        };
+      }
+    }
     if (operator === '+/-') {
       if (next) {
         return {
