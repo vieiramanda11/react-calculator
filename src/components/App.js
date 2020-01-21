@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import Display from './Display';
 import ButtonPanel from './ButtonPanel';
 import Calculate from '../logic/calculate';
 
-const App = ({ state, setState }) => {
-  [state, setState] = useState({
+const App = () => {
+  const [state, setState] = useState({
     total: null,
     next: null,
     operation: null,
@@ -21,11 +20,6 @@ const App = ({ state, setState }) => {
       <ButtonPanel clickHandler={handleClick} />
     </div>
   );
-};
-
-App.propTypes = {
-  state: PropTypes.func.isRequired,
-  setState: PropTypes.func.isRequired,
 };
 
 export default App;
