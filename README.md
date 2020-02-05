@@ -5,6 +5,10 @@ Calculator App built using React
 
 ### ✨ [Demo](https://react-basic-calc-app.herokuapp.com/)
 
+## Preview
+
+![](calculator.gif)
+
 ## Install
 
 ```sh
